@@ -12,7 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setserror] = useState('');
 
-  const urlapi = `http://api.openweathermap.org/data/2.5/weather?q=${city},thailand&units=metric&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`;
+  const urlapi = `https://api.openweathermap.org/data/2.5/weather?q=${city},thailand&units=metric&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`;
 
   useEffect(() => {
     const fetchWeather = async () => {
