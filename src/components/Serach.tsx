@@ -21,7 +21,7 @@ export default function Search({
   React.useEffect(() => {
     const fetchcity = async () => {
       const res = await axios.get(
-        `http://api.openweathermap.org/geo/1.0/direct?q='${valuetext}'&limit=5&lang=th&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q='${valuetext}'&limit=5&lang=th&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`
       );
       setCity(res.data);
     };
