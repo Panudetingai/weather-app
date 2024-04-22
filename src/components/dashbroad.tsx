@@ -32,7 +32,7 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
       <CardHeader>
         <div className="title flex items-center gap-2">
           <CloudSun />
-          <h1 className="text-2xl">สภาพอากาศรายวัน</h1>
+          <h1 className="text-2xl">พยากรณ์อากาศรายวัน</h1>
         </div>
       </CardHeader>
       <CardBody>
