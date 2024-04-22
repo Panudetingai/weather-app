@@ -15,15 +15,17 @@ export default function Search({
 }: {
   value: ((valuetext: string | undefined) => void) | null | undefined;
 }) {
-  const [valuetext, setvaluetext] = useState("แม่สรวย, เชียงราย");
+  const [valuetext, setvaluetext] = useState('');
   const [city, setCity] = useState([]);
+
   React.useEffect(() => {
     const fetchcity = async () => {
       const res = await axios.get(
-        "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province_with_amphure_tambon.json"
+        `http://api.openweathermap.org/geo/1.0/direct?q='${valuetext}'&limit=5&lang=th&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`
       );
       setCity(res.data);
     };
+
     fetchcity();
 
     if (value) {
@@ -31,22 +33,7 @@ export default function Search({
     }
   }, [valuetext]);
 
-  const datalist = city.map((citys: any) => citys);
-
-  function getCity(datalist: any) {
-    const cityitems = datalist.map((cityitems: any) => {
-      return cityitems.amphure.map((itemcity: any) => {
-        return {
-          provider: { th: cityitems.name_th, en: cityitems.name_en },
-          city: { th: itemcity.name_th, en: itemcity.name_en },
-        };
-      });
-    });
-
-    return cityitems;
-  }
-
-  const getcity = getCity(datalist);
+  // console.log(city.map((item: any) => console.log(item.local_names?.th)));
 
   return (
     <>
@@ -56,7 +43,7 @@ export default function Search({
         classNames={{
           base: "max-w-xs",
           listboxWrapper: "max-h-[320px]",
-          selectorButton: "text-default-500"
+          selectorButton: "text-default-500",
         }}
         inputProps={{
           classNames: {
@@ -89,33 +76,30 @@ export default function Search({
             content: "p-1 border-small border-default-100 bg-background",
           },
         }}
-        startContent={<SearchIcon className="text-default-400" strokeWidth={2.5} size={20} />}
+        startContent={
+          <SearchIcon
+            className="text-default-400"
+            strokeWidth={2.5}
+            size={20}
+          />
+        }
         radius="full"
         variant="bordered"
       >
-        {getcity.map((item: any) => {
-          return item.map((cityitem: any) => (
-            <AutocompleteItem
-              key={cityitem.id}
-              textValue={
-                cityitem.city.th + "," + cityitem.provider.th
-              }
-            >
-              <div className="flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div className="flex flex-col">
-                    <span className="text-small">
-                      {cityitem.provider.th} {cityitem.city.th}
-                    </span>
-                    <span className="text-tiny text-default-400">
-                      {cityitem.provider.en} {cityitem.city.en}
-                    </span>
-                  </div>
+        {city.map((item: any, index: number) => (
+          <AutocompleteItem key={item.name + item.state} textValue={item.local_names?.th +','+ item.state}>
+            <div className="flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div className="flex flex-col">
+                  <span className="text-small">
+                    {item.local_names?.th} {item.state}
+                  </span>
+                  <span className="text-tiny text-default-400"></span>
                 </div>
               </div>
-            </AutocompleteItem>
-          ));
-        })}
+            </div>
+          </AutocompleteItem>
+        ))}
       </Autocomplete>
     </>
   );

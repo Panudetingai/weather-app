@@ -14,11 +14,12 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
       if (dataweather && dataweather.coord) {
         try {
           const res = await axios.get(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&cnt=7&units=metric&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&cnt=7&units=metric&lang=th&appid=${process.env.NEXT_PUBLIC_WEARHER_KEY}`
           );
           setDaily(res.data);
         } catch (err) {
         } finally {
+          
         }
       }
     };
@@ -26,7 +27,6 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
     fetchdaliy();
   }, [dataweather]);
 
-  console.log("daily", daily);
   return (
     <Card className="w-full col-span-3 max-sm:my-5">
       <CardHeader>
@@ -40,8 +40,6 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
           {daily.list?.map((day: any, index: number) => {
             const [date, time] = day.dt_txt.split(" ");
             const [hour, minute] = time.split(":");
-
-            console.log("daliyitem", day);
             return (
               <div className="item flex flex-col items-center border rounded-md p-4 border-slate-800" key={index}>
                 <h4 className="flex gap-2 my-1">
