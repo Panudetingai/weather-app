@@ -1,9 +1,18 @@
 "use client";
 import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import Autoplay from "embla-carousel-autoplay"
 import axios from "axios";
 import { time } from "console";
-import { CalendarRangeIcon, CloudSun, TimerIcon } from "lucide-react";
+import { CalendarRangeIcon, Cloud, CloudSun, TimerIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
+import Slidercard from "./slider-card";
 
 export default function Dashbroad({ dataweather }: { dataweather: any }) {
   // set state
@@ -19,7 +28,6 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
           setDaily(res.data);
         } catch (err) {
         } finally {
-          
         }
       }
     };
@@ -27,35 +35,18 @@ export default function Dashbroad({ dataweather }: { dataweather: any }) {
     fetchdaliy();
   }, [dataweather]);
 
+  console.log(daily);
+
   return (
     <Card className="w-full col-span-3 max-sm:my-5">
       <CardHeader>
         <div className="title flex items-center gap-2">
           <CloudSun />
-          <h1 className="text-2xl">พยากรณ์อากาศรายวัน</h1>
+          <h1 className="text-2xl font-semibold">พยากรณ์อากาศรายวัน</h1>
         </div>
       </CardHeader>
-      <CardBody>
-        <div className="grid lg:grid-cols-7 gap-2">
-          {daily.list?.map((day: any, index: number) => {
-            const [date, time] = day.dt_txt.split(" ");
-            const [hour, minute] = time.split(":");
-            return (
-              <div className="item flex flex-col items-center border rounded-md p-4 border-slate-800" key={index}>
-                <h4 className="flex gap-2 my-1">
-                  {date}
-                </h4>
-                <div className="item-body">
-                  <Image
-                    src="https://cdn-icons-png.freepik.com/256/13539/13539224.png?semt=ais_hybrid"
-                    width={50}
-                  ></Image>
-                  <h1 className="text-2xl font-semibold">{day.main.temp.toFixed(0)}&#176;C</h1>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      <CardBody className="mx-auto">
+       <Slidercard daily={daily}/>
       </CardBody>
     </Card>
   );

@@ -86,7 +86,7 @@ export default function Search({
         radius="full"
         variant="bordered"
       >
-        {city.map((item: any, index: number) => (
+        {city.map((item: any) => (
           <AutocompleteItem key={item.name + item.state} textValue={item.local_names?.th +','+ item.state}>
             <div className="flex justify-between items-center">
               <div className="flex gap-2 items-center">
@@ -94,7 +94,7 @@ export default function Search({
                   <span className="text-small">
                     {item.local_names?.th} {item.state}
                   </span>
-                  <span className="text-tiny text-default-400"></span>
+                  <span className="text-tiny text-default-400">{item.local_names?.en} {item.state}</span>
                 </div>
               </div>
             </div>

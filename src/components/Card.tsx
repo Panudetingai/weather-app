@@ -14,8 +14,7 @@ export default function CardBox({
       <CardHeader className="flex gap-2 justify-between items-end">
         <div className="image-box flex flex-col items-center">
           <Image
-            src={`                
-            https://cdn-icons-png.freepik.com/256/13539/13539224.png?semt=ais_hybrid`}
+            src={`https://openweathermap.org/img/wn/${weather.weather?.[0].icon}@2x.png`}
             width={100}
           />
           <h1 className="text-2xl uppercase font-semibold">
@@ -24,7 +23,7 @@ export default function CardBox({
         </div>
         <div className="box-namecity">
           <h1 className="text-6xl font-semibold">
-            {Math.round((weather.main?.temp))}&#176;
+            {Math.round(weather.main?.temp)}&#176;
             <span className="">C</span>
           </h1>
           <div className="flex gap-2 items-center">
@@ -46,21 +45,21 @@ export default function CardBox({
             <p>รู้สึกเหมือน</p>
           </div>
           <div className="celsius text-center">
-            <p>{Math.round((weather.main?.feels_like))}&#176;C</p>
+            <p>{Math.round(weather.main?.feels_like)}&#176;C</p>
           </div>
           <div className="icon flex items-center">
             <Thermometer />
             <p>อุณหภูมิสูงสุด</p>
           </div>
           <div className="celsius text-center">
-            <p>{Math.round((weather.main?.temp_max))}&#176;C</p>
+            <p>{Math.round(weather.main?.temp_max)}&#176;C</p>
           </div>
           <div className="icon flex items-center">
             <Thermometer />
             <p>อุณหภูมิต่ำสุด</p>
           </div>
           <div className="celsius text-center">
-            <p>{Math.round((weather.main?.temp_min))}&#176;C</p>
+            <p>{Math.round(weather.main?.temp_min)}&#176;C</p>
           </div>
         </div>
         <hr className="h-px my-5 border-b border-slate-800" />
@@ -68,17 +67,17 @@ export default function CardBox({
           <h1 className="text-md">ค่าความชื้นและความกดอากาศ</h1>
           <div className="grid-cols-3 grid gap-2 justify-items-center mt-2">
             <div className="flex flex-col items-center">
-              <Droplets/>
+              <Droplets />
               <h2 className="text-lg">{weather.main?.humidity}%</h2>
               <p className="text-sm">ความชื้น</p>
             </div>
             <div className="flex flex-col items-center">
-              <Waves/>
+              <Waves />
               <h2 className="text-lg">{weather.main?.pressure}hPa</h2>
               <p className="text-sm">ความกดอากาศต่อทะเล</p>
             </div>
             <div className="flex flex-col items-center">
-              <Droplets/>
+              <Droplets />
               <h2 className="text-lg">{weather.main?.grnd_level}hPa</h2>
               <p className="text-sm">ความกดอากาศต่อพื้นดิน</p>
             </div>
