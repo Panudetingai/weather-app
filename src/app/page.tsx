@@ -7,6 +7,7 @@ import CardBox from "@/components/Card";
 import Dashbroad from "@/components/dashbroad";
 import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/loading";
 
 export default function Home() {
   const [weather, setWeather] = useState({});
@@ -33,6 +34,10 @@ export default function Home() {
     };
     fetchWeather();
   }, []);
+
+  if(loading){
+    return <Loading/>
+  }
 
   const serachsubmit = async (e: any) =>{
     e.preventDefault();
@@ -81,7 +86,7 @@ export default function Home() {
           Search
         </Button>
       </div>
-      <div className="card-box my-5 lg:flex sm:block md:flex gap-3">
+      <div className="card-box my-5 lg:flex sm:mt-5 md:flex gap-3">
         <CardBox weather={weather} data={city} />
         <Dashbroad dataweather={weather} />
       </div>

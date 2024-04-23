@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,26 +8,45 @@ import {
 } from "./ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Image } from "@nextui-org/react";
+import { ShieldAlert } from "lucide-react";
 
 export default function Slidercard({ daily }: { daily: any }) {
+  if (!daily) {
+    return (
+      <div className="flex justify-center my-auto">
+        <h1 className="text-2xl font-semibold flex gap-2 items-center">
+          <ShieldAlert />
+          Somethig went wrong
+        </h1>
+      </div>
+    );
+  }
+
   return (
-    <section className="w-full py-2 mx-auto px-12">
+    <section className="w-full py-2 mx-auto lg:px-12 md:px-12 sm:p-0">
       <Carousel
         className="max-w-4xl"
-        // plugins={[
-        //   Autoplay({
-        //     delay: 4000,
-        //   }),
-        // ]}
+        plugins={[
+          Autoplay({
+            delay: 3000,
+          }),
+        ]}
+        opts={{
+          align: "start",
+          loop: false,
+        }}
       >
         <CarouselContent>
-          {daily.list?.map((day: any, index: number) => {
+          {daily.list?.map((day: any) => {
             const [date, time] = day.dt_txt.split(" ");
             const [hour, minute] = time.split(":");
             return (
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3" key={index}>
-                <div className="item flex flex-col border rounded-md p-4 border-slate-800">
-                  <div className="header flex items-center justify-between">
+              <CarouselItem
+                className="lg:basis-1/3 max-md:basis-1/2 max-sm:basis-full"
+                key={day.dt_txt}
+              >
+                <div className="item flex max-md:aspect-square flex-col border rounded-md p-4 border-slate-800 hover:border-slate-600 hover:shadow-sm hover:shadow-slate-500 duration-150 ease-in">
+                  <div className="header lg:block max-lg:flex xl:flex items-center justify-between">
                     <div className="box-head flex-col">
                       <div className="flex logo items-center">
                         <Image
@@ -48,18 +67,34 @@ export default function Slidercard({ daily }: { daily: any }) {
                       </p>
                     </div>
                   </div>
-                  <h4 className="text-sm ms-2 text-slate-600">
+                  <h4 className="text-sm xl:ms-2 md:ms-2 lg:ms-0 max-sm:ms-2 sm:ms-2 text-slate-600">
                     วันที่: {date}
                   </h4>
                   {/* body card */}
                   <div className="border-t-1 border-slate-700 mt-2">
                     <div className="box w-full flex justify-between my-2">
-                      <label htmlFor="">รู้สึกเหมือน</label>
-                      <p>{daily.list[0].main.feels_like}&#176;C</p>
+                      <label htmlFor="" className="text-slate-400 text-sm">
+                        อุณภูมิที่รู้สึก
+                      </label>
+                      <p>{daily.list[0].main.feels_like.toFixed(0)}&#176;C</p>
                     </div>
                     <div className="box w-full flex justify-between my-2">
-                      <label htmlFor="">รู้สึกเหมือน</label>
-                      <p>{daily.list[0].main.feels_like}&#176;C</p>
+                      <label htmlFor="" className="text-slate-400 text-sm">
+                        ความชื้น
+                      </label>
+                      <p>{daily.list[0].main.humidity.toFixed(0)}&#176;C</p>
+                    </div>
+                    <div className="box w-full flex justify-between my-2">
+                      <label htmlFor="" className="text-slate-400 text-sm">
+                        อุณภูมิต่ำสุด
+                      </label>
+                      <p>{daily.list[0].main.temp_min.toFixed(0)}&#176;C</p>
+                    </div>
+                    <div className="box w-full flex justify-between my-2">
+                      <label htmlFor="" className="text-slate-400 text-sm">
+                        อุณภูมิสูงสุด
+                      </label>
+                      <p>{daily.list[0].main.temp_max.toFixed(0)}&#176;C</p>
                     </div>
                   </div>
                 </div>
@@ -67,46 +102,13 @@ export default function Slidercard({ daily }: { daily: any }) {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <Suspense fallback={""}>
+          <div className="button-carousel lg:block sm:hidden md:block max-sm:hidden">
+            <CarouselPrevious className="hover:bg-white hover:text-black" />
+            <CarouselNext className="hover:bg-white hover:text-black"/>
+          </div>
+        </Suspense>
       </Carousel>
     </section>
   );
-}
-
-{
-  /* <Carousel
-      className="max-w-4xl"
-      plugins={[
-        Autoplay({
-          delay: 4000,
-        }),
-      ]}
-    >
-      <CarouselContent className="">
-        {daily.list?.map((day: any, index: number) => {
-          const [date, time] = day.dt_txt.split(" ");
-          const [hour, minute] = time.split(":");
-          return (
-            <CarouselItem
-              className="flex flex-col aspect-square justify-center ml-2 lg:basis-1/3 sm:basis-1/2 items-center border rounded-md p-6 border-slate-800"
-              key={index}
-            >
-              <h4 className="flex gap-2 my-1">{date}</h4>
-              <div className="item-body">
-                <Image
-                  src={`https://openweathermap.org/img/wn/${day.weather?.[0].icon}@2x.png`}
-                  width={50}
-                ></Image>
-                <h1 className="text-2xl font-semibold">
-                  {day.main.temp.toFixed(0)}&#176;C
-                </h1>
-              </div>
-            </CarouselItem>
-          );
-        })}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel> */
 }
