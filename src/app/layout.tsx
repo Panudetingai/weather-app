@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="shortcut icon" href="/weatherLogo.webp" type="image/x-icon" />
+      </head>
       <body className={`${inter.className}, container`}>
         <main>{children}</main>
         <Toaster richColors expand={false} />
