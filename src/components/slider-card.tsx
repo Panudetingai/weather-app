@@ -22,6 +22,8 @@ export default function Slidercard({ daily }: { daily: any }) {
     );
   }
 
+  console.log(daily);
+
   return (
     <section className="w-full py-2 mx-auto lg:px-12 md:px-12 sm:p-0">
       <Carousel
@@ -68,7 +70,7 @@ export default function Slidercard({ daily }: { daily: any }) {
                     </div>
                   </div>
                   <h4 className="text-sm xl:ms-2 md:ms-2 lg:ms-0 max-sm:ms-2 sm:ms-2 text-slate-600">
-                    วันที่: {date}
+                    เวลา: {hour}:{minute}
                   </h4>
                   {/* body card */}
                   <div className="border-t-1 border-slate-700 mt-2">
@@ -76,25 +78,25 @@ export default function Slidercard({ daily }: { daily: any }) {
                       <label htmlFor="" className="text-slate-400 text-sm">
                         อุณภูมิที่รู้สึก
                       </label>
-                      <p>{daily.list[0].main.feels_like.toFixed(0)}&#176;C</p>
+                      <p>{day.main.feels_like.toFixed(0)}&#176;C</p>
                     </div>
                     <div className="box w-full flex justify-between my-2">
                       <label htmlFor="" className="text-slate-400 text-sm">
                         ความชื้น
                       </label>
-                      <p>{daily.list[0].main.humidity.toFixed(0)}&#176;C</p>
+                      <p>{day.main.humidity.toFixed(0)}&#176;C</p>
                     </div>
                     <div className="box w-full flex justify-between my-2">
                       <label htmlFor="" className="text-slate-400 text-sm">
                         อุณภูมิต่ำสุด
                       </label>
-                      <p>{daily.list[0].main.temp_min.toFixed(0)}&#176;C</p>
+                      <p>{day.main.temp_min.toFixed(0)}&#176;C</p>
                     </div>
                     <div className="box w-full flex justify-between my-2">
                       <label htmlFor="" className="text-slate-400 text-sm">
                         อุณภูมิสูงสุด
                       </label>
-                      <p>{daily.list[0].main.temp_max.toFixed(0)}&#176;C</p>
+                      <p>{day.main.temp_max.toFixed(0)}&#176;C</p>
                     </div>
                   </div>
                 </div>
@@ -105,7 +107,7 @@ export default function Slidercard({ daily }: { daily: any }) {
         <Suspense fallback={""}>
           <div className="button-carousel lg:block sm:hidden md:block max-sm:hidden">
             <CarouselPrevious className="hover:bg-white hover:text-black" />
-            <CarouselNext className="hover:bg-white hover:text-black"/>
+            <CarouselNext className="hover:bg-white hover:text-black" />
           </div>
         </Suspense>
       </Carousel>

@@ -67,8 +67,8 @@ export default function Search({
             ],
           },
         }}
-        aria-label="Select an employee"
-        placeholder="Enter employee name"
+        aria-label="Select an city"
+        placeholder="Enter City name"
         popoverProps={{
           offset: 10,
           classNames: {
